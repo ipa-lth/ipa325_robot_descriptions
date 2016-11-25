@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<robot 
+       xmlns:xacro="http://www.ros.org/wiki/xacro"
+       name="ur5" >
+
+  <!-- ur5 -->
+  <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />
+
+  <!-- ipa ur5 robot (include additional robot links here) -->
+  <xacro:macro name="ipa325_ur5" params="prefix parent *origin">
+
+    <joint name="${prefix}base_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${prefix}real_base"/>
+      <xacro:insert_block name="origin" />
+    </joint>
+
+    <!-- virtual link 0: Because real robot base frame is rotated by PI -->
+    <link name="${prefix}real_base"/>
+
+    <!-- virtual joint 0: Because real robot base frame is rotated by PI -->
+    <!-- ABOUT TO BECOME DEPRECATED! The original model recorrects it! 
+        In future releases (above indigo-devel) this is hopefully not needed anymore --> 
+    <joint name="virt_0_joint" type="fixed" >
+        <origin xyz="0 0 0" rpy="0 0 ${pi}" />
+        <parent link="${prefix}real_base" />
+        <child link="${prefix}base_link" />
+    </joint>
+
+    <!-- include default robot model -->
+    <xacro:ur5_robot prefix="${prefix}" joint_limited="false"/>
+    
+    <!-- virtual joint 7: Because real robot flange frame is rotated by PI/2 -->
+    <joint name="virt_7_joint" type="fixed" >
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
+      <parent link="${prefix}ee_link" />
+      <child link="${prefix}ee" />
+    </joint>
+
+    <!-- virtual link 7: Because real robot flange frame is rotated by PI/2 -->
+    <link name="${prefix}ee"/>
+    
+
+  </xacro:macro>
+
+
+</robot>
