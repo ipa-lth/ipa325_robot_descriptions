@@ -1,0 +1,314 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find pitasc_robot_descriptions)/urdf/lbr4/lbr.gazebo.xacro" />
+  <xacro:include filename="$(find pitasc_robot_descriptions)/urdf/lbr4/lbr.transmission.xacro" />
+
+  <xacro:property name="pi" value="3.14159265" />
+
+
+  <xacro:macro name="lbr4" params="prefix parent r:=1.0 g:=0.5 b:=0.0 *origin">
+
+
+    <joint name="${prefix}joint_0" type="fixed" >
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}" />
+      <child link="${prefix}base" />
+    </joint>
+
+
+    <link name="${prefix}base">
+      <inertial>
+        <origin xyz="0 0 0.06" rpy="0 0 0"/>
+        <mass value="1.0"/>
+        <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+      </inertial>
+
+      <visual>
+        <origin xyz="0 0 0.06" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="0.060" length="0.12"/>
+        </geometry>
+        <material name="lbr-material">
+          <color rgba="${r} ${g} ${b} 1.0"/>
+        </material>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0.06" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="0.060" length="0.12"/>
+        </geometry>
+      </collision>
+    </link>
+
+
+    <joint name="${prefix}joint_1" type="revolute">
+    <!--origin xyz="0 0 0.12" rpy="0 0 -2.8407"/--> <!-- modified -->
+    <origin xyz="0 0 0.12" rpy="0 0 0"/> <!-- modified -->
+      <parent link="${prefix}base"/>
+      <child link="${prefix}link_1"/>
+      <axis xyz="0 0 1"/>
+      <dynamics damping="10" />
+      <limit effort="200" velocity="1.9634" lower="-2.9670" upper="2.9670"/>
+      <safety_controller k_position="20" k_velocity="50" soft_lower_limit="${-2.9670 + 0.01}" soft_upper_limit="${2.9670 - 0.01}" />
+    </joint>
+
+
+    <link name="${prefix}link_1">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <!--mass value="5.9907"/-->
+        <mass value="2.0"/>
+        <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+      </inertial>
+      
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_1.stl" />
+        </geometry>
+        <material name="lbr-material" />
+      </visual>
+      
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_1_collision.stl" />
+        </geometry>
+      </collision>
+    </link>
+
+
+    <joint name="${prefix}joint_2" type="revolute">
+      <origin xyz="0 -0.002 0.1915" rpy="${pi/2} 0 0"/>
+      <parent link="${prefix}link_1"/>
+      <child link="${prefix}link_2"/>
+      <axis xyz="0 0 1"/>
+      <dynamics damping="10" />
+      <limit effort="200" velocity="1.9634" lower="-2.0943" upper="2.0943"/>
+      <safety_controller k_position="20" k_velocity="50" soft_lower_limit="${-2.0943 + 0.01}"   soft_upper_limit="${2.0943 - 0.01}" />
+    </joint>
+
+
+    <link name="${prefix}link_2">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <!--mass value="5.734939"/-->
+        <mass value="2.0"/>
+        <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03" />
+      </inertial>
+      
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_2.stl" />
+        </geometry>
+        <material name="lbr-material" />
+      </visual>
+      
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_2_collision.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+
+    <joint name="${prefix}joint_3" type="revolute">
+      <origin xyz="0 0.2085 0" rpy="-${pi/2} 0 0"/>
+      <parent link="${prefix}link_2"/>
+      <child link="${prefix}link_3"/>
+      <axis xyz="0 0 1"/>
+      <dynamics damping="5" />
+      <limit effort="100" velocity="1.9634" lower="-2.9670" upper="2.9670"/>
+      <safety_controller k_position="20" k_velocity="25" soft_lower_limit="${-2.9670 + 0.01}" soft_upper_limit="${2.9670 - 0.01}" />
+    </joint>
+
+
+    <link name="${prefix}link_3">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <!--mass value="4.214668"/-->
+        <mass value="2.0"/>
+        <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03" />
+      </inertial>
+      
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_3.stl" />
+        </geometry>
+        <material name="lbr-material" />
+      </visual>
+      
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_3_collision.stl"/>
+        </geometry>
+      </collision>
+    </link>  
+
+
+    <joint name="${prefix}joint_4" type="revolute">
+      <origin xyz="0 0.002 0.1915" rpy="-${pi/2} 0 0" />
+      <parent link="${prefix}link_3"/>
+      <child link="${prefix}link_4"/>
+      <axis xyz="0 0 1" />
+      <dynamics damping="5" />
+      <limit effort="100" velocity="1.9634" lower="-2.0943" upper="2.0943"/>
+      <!--limit effort="176" velocity="0.4189" upper="2.0943951" lower="-2.0943951"/-->
+      <safety_controller k_position="20" k_velocity="25" soft_lower_limit="${-2.0943 + 0.01}" soft_upper_limit="${2.0943 - 0.01}" />
+    </joint>
+
+
+    <link name="${prefix}link_4">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <!--mass value="3.669819"/-->
+        <mass value="2.0"/>
+        <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03" />
+      </inertial>
+      
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_4.stl" />
+        </geometry>
+        <material name="lbr-material" />
+      </visual>
+      
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_4_collision.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+
+    <joint name="${prefix}joint_5" type="revolute">
+      <origin xyz="0 -0.2085 0" rpy="${pi/2} 0 0" />
+      <parent link="${prefix}link_4"/>
+      <child link="${prefix}link_5"/>
+      <axis xyz="0 0 1" />
+      <dynamics damping="5" />
+      <limit effort="100" velocity="1.9634" lower="-2.9670" upper="2.9670" />
+      <safety_controller k_position="20" k_velocity="25" soft_lower_limit="${-2.9670 + 0.01}" soft_upper_limit="${2.9670 - 0.01}" />
+    </joint>
+
+
+    <link name="${prefix}link_5">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="2.313272"/>
+        <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03" />
+      </inertial>
+      
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_5.stl" />
+        </geometry>
+        <material name="lbr-material" />
+      </visual>
+      
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_5_collision.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+
+    <joint name="${prefix}joint_6" type="revolute">
+      <origin xyz="0 0.046 0.1815" rpy="${pi/2} 0 0" />
+      <parent link="${prefix}link_5"/>
+      <child link="${prefix}link_6"/>
+      <axis xyz="0 0 1" />
+      <dynamics damping="5" />
+      <limit effort="30" velocity="1.9634" lower="-2.0943951" upper="2.0943951" />
+      <!--limit effort="20.1" velocity="0.4363" upper="2.0943951" lower="-2.0943951" /-->
+      <safety_controller k_position="20" k_velocity="25" soft_lower_limit="${-2.0943951 + 0.01}" soft_upper_limit="${2.0943951 - 0.01}" />
+    </joint>
+
+
+    <link name="${prefix}link_6">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="2.057856"/>
+        <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+      </inertial>
+      
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_6.stl" />
+        </geometry>
+        <material name="lbr-material" />
+      </visual>
+      
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_6_collision.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+
+    <joint name="${prefix}joint_7" type="revolute">
+      <origin xyz="0 0.057 0.0455" rpy="-${pi/2} 0 0" />
+      <parent link="${prefix}link_6"/>
+      <child link="${prefix}link_7"/>
+      <axis xyz="0 0 1" />
+      <dynamics damping="5" />
+      <limit effort="30" velocity="1.9634" lower="-2.9670" upper="2.9670" />
+      <!--limit effort="20.1" velocity="0.4363" upper="2.0943951" lower="-2.0943951" /-->
+      <safety_controller k_position="20" k_velocity="25" soft_lower_limit="${-2.9670 + 0.01}" soft_upper_limit="${2.9670 - 0.01}" />
+    </joint>
+
+
+    <link name="${prefix}link_7">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="1.120198"/>
+        <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+      </inertial>
+      
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_7.stl" />
+        </geometry>
+        <material name="lbr-material" />
+      </visual>
+      
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_7_collision.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+
+    <!-- eef -->
+    <joint name="${prefix}ee_fixed_joint" type="fixed">
+      <parent link="${prefix}link_7" />
+      <child link = "${prefix}ee" />
+      <origin xyz="0 0 0.021" rpy="0 0 0" /> <!-- TODO -->
+    </joint>
+
+    <link name="${prefix}ee"/>
+
+
+    <!-- extensions -->
+    <xacro:lbr_gazebo name="${prefix}" />
+    <xacro:lbr_transmission name="${prefix}" />
+
+  </xacro:macro>
+</robot>
