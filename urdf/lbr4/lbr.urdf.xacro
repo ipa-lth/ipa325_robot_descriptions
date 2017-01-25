@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find pitasc_robot_descriptions)/urdf/lbr4/lbr.gazebo.xacro" />
-  <xacro:include filename="$(find pitasc_robot_descriptions)/urdf/lbr4/lbr.transmission.xacro" />
-
   <xacro:property name="pi" value="3.14159265" />
 
 
@@ -29,7 +26,7 @@
         <geometry>
           <cylinder radius="0.060" length="0.12"/>
         </geometry>
-        <material name="lbr-material">
+        <material name="${prefix}-material">
           <color rgba="${r} ${g} ${b} 1.0"/>
         </material>
       </visual>
@@ -62,15 +59,15 @@
         <mass value="2.0"/>
         <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
       </inertial>
-      
+
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_1.stl" />
         </geometry>
-        <material name="lbr-material" />
+        <material name="${prefix}-material" />
       </visual>
-      
+
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
@@ -98,15 +95,15 @@
         <mass value="2.0"/>
         <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03" />
       </inertial>
-      
+
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_2.stl" />
         </geometry>
-        <material name="lbr-material" />
+        <material name="${prefix}-material" />
       </visual>
-      
+
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
@@ -134,22 +131,22 @@
         <mass value="2.0"/>
         <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03" />
       </inertial>
-      
+
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_3.stl" />
         </geometry>
-        <material name="lbr-material" />
+        <material name="${prefix}-material" />
       </visual>
-      
+
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_3_collision.stl"/>
         </geometry>
       </collision>
-    </link>  
+    </link>
 
 
     <joint name="${prefix}joint_4" type="revolute">
@@ -171,15 +168,15 @@
         <mass value="2.0"/>
         <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03" />
       </inertial>
-      
+
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_4.stl" />
         </geometry>
-        <material name="lbr-material" />
+        <material name="${prefix}-material" />
       </visual>
-      
+
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
@@ -206,15 +203,15 @@
         <mass value="2.313272"/>
         <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03" />
       </inertial>
-      
+
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_5.stl" />
         </geometry>
-        <material name="lbr-material" />
+        <material name="${prefix}-material" />
       </visual>
-      
+
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
@@ -242,15 +239,15 @@
         <mass value="2.057856"/>
         <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
       </inertial>
-      
+
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_6.stl" />
         </geometry>
-        <material name="lbr-material" />
+        <material name="${prefix}-material" />
       </visual>
-      
+
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
@@ -278,15 +275,15 @@
         <mass value="1.120198"/>
         <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
       </inertial>
-      
+
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://pitasc_robot_descriptions/meshes/lbr4/joint_7.stl" />
         </geometry>
-        <material name="lbr-material" />
+        <material name="${prefix}-material" />
       </visual>
-      
+
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
@@ -304,11 +301,6 @@
     </joint>
 
     <link name="${prefix}ee"/>
-
-
-    <!-- extensions -->
-    <xacro:lbr_gazebo name="${prefix}" />
-    <xacro:lbr_transmission name="${prefix}" />
 
   </xacro:macro>
 </robot>
