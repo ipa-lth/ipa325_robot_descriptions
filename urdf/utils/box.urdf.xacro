@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<robot
+       xmlns:xacro="http://www.ros.org/wiki/xacro"
+       name="box" >
+
+
+
+  <!-- ipa ur5 robot (include additional robot links here) -->
+  <xacro:macro name="standing_box" params="prefix parent *origin
+    length width height *color">
+
+    <joint name="${prefix}floor_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${prefix}floor"/>
+      <xacro:insert_block name="origin" />
+    </joint>
+
+    <link name="${prefix}floor">
+        <visual>
+            <geometry>
+                <box size="${length} ${width} ${height}"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="${length/2} ${width/2} ${height/2}"/>
+            <material name="${prefix}color">
+              <xacro:insert_block name="color" />
+            </material>
+        </visual>
+    </link>
+
+    <joint name="${prefix}center_jnt" type="fixed">
+      <origin xyz="${length/2} ${width/2} ${height/2}" rpy="0 0 0"/>
+      <parent link="${prefix}floor"/>
+      <child link="${prefix}center"/>
+    </joint>
+
+    <link name="${prefix}center"/>
+
+    <joint name="${prefix}edge1_jnt" type="fixed">
+      <origin xyz="${-length/2} ${-width/2} ${height/2}" rpy="0 0 0"/>
+      <parent link="${prefix}center"/>
+      <child link="${prefix}edge1"/>
+    </joint>
+    <link name="${prefix}edge1"/>
+
+    <joint name="${prefix}edge2_jnt" type="fixed">
+      <origin xyz="${-length/2} ${width/2} ${height/2}" rpy="0 0 0"/>
+      <parent link="${prefix}center"/>
+      <child link="${prefix}edge2"/>
+    </joint>
+    <link name="${prefix}edge2"/>
+
+
+    <joint name="${prefix}edge3_jnt" type="fixed">
+      <origin xyz="${length/2} ${width/2} ${height/2}" rpy="0 0 0"/>
+      <parent link="${prefix}center"/>
+      <child link="${prefix}edge3"/>
+    </joint>
+    <link name="${prefix}edge3"/>
+
+    <joint name="${prefix}edge4_jnt" type="fixed">
+      <origin xyz="${length/2} ${-width/2} ${height/2}" rpy="0 0 0"/>
+      <parent link="${prefix}center"/>
+      <child link="${prefix}edge4"/>
+    </joint>
+    <link name="${prefix}edge4"/>
+
+    <joint name="${prefix}center_top_jnt" type="fixed">
+      <origin xyz="0 0 ${height/2}" rpy="0 0 0"/>
+      <parent link="${prefix}center"/>
+      <child link="${prefix}center_top"/>
+    </joint>
+    <link name="${prefix}center_top"/>
+
+  </xacro:macro>
+
+
+</robot>
