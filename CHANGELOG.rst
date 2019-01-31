@@ -2,6 +2,6 @@
 Changelog for package pitasc_robot_descriptions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2019-01-31)
+------------------
 * Initial release
